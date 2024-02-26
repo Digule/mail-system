@@ -55,4 +55,24 @@ public class MailClient
         MailItem item = new MailItem(user, to, message);
         server.post(item);
     }
+    
+    public String sendMailItem(String correo, String a, String b){
+        return null;
+    }
+    
+    public int getNumberOfMessageInServer(){
+        return 0;
+    }
+    
+    public MailItem getLastReceivedMail(){
+        return null;
+    }
+    
+    public boolean receiveAndAutorespond(){
+        return false;
+    }
+    
+    public String getStatus(){
+        return null;
+    }
 }
