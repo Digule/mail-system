@@ -13,6 +13,8 @@ public class MailClient
     private String user;
 
     private MailItem lastReceived;
+
+    private boolean spam;
     /**
      * Create a mail client run by user and attached to the given server.
      */
@@ -21,6 +23,7 @@ public class MailClient
         this.server = server;
         this.user = user;
         lastReceived = null;
+        spam = false;
     }
 
     /**
@@ -30,7 +33,14 @@ public class MailClient
     {
         MailItem item = server.getNextMailItem(user) ;
         if(item != null){
-            lastReceived = item;
+            if((item.getMessage().contains("loteria") || item.getMessage().contains("viagra")) && !item.getSubject().contains(user)){
+                spam = true;  
+                item = null;
+            }
+
+            else{
+                lastReceived = item;
+            }
         }
         return item;
     }
@@ -44,6 +54,9 @@ public class MailClient
         MailItem item = server.getNextMailItem(user);
         if(item == null) {
             System.out.println("No new mail.");
+        }
+        else if(getNextMailItem() == null){
+            System.out.println("Mensaje recibido de spam");
         }
         else {
             item.print();
